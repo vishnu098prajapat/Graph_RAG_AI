@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Google Font variables */
+:root {
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+}
+
+:root { color-scheme: light; }
+
+html, body { height: 100%; }
+
+body {
+  background: #f0f9ff;
+  color: #1e1b4b;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: rgba(2, 132, 199, 0.18); }
+
+/* slim scrollbars */
+* { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.12) transparent; }
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 8px; }
+
+@layer utilities {
+  .bg-dot-grid {
+    background-image: radial-gradient(circle, rgba(56,189,248,0.18) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .text-gradient-pink-sky {
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #0284c7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}

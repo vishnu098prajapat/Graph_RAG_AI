@@ -29,7 +29,9 @@ class DocumentRegistry:
     def save(self, doc_id: str, filename: str, pdf: bytes, pages: list[Page]) -> None:
         d = self._dir(doc_id)
         d.mkdir(parents=True, exist_ok=True)
-        (d / "original.pdf").write_bytes(pdf)
+        pdf_path = d / "original.pdf"
+        if not pdf_path.exists():
+            pdf_path.write_bytes(pdf)
         layout = {
             "filename": filename,
             "pages": [

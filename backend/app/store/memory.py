@@ -60,7 +60,13 @@ class MemoryStore:
         return [(idx.ids[i], float(sims[i])) for i in top]
 
     def sparse_search(self, query: str, k: int, doc_id: str | None) -> list[tuple[str, float]]:
-        return self._index(doc_id).bm25.search(query, k)
+        idx = self._index(doc_id)
+        if not idx.ids:
+            return []
+        from ..engine_fast import fast_bm25_search
+        corpus = [self._chunks[cid].text for cid in idx.ids if cid in self._chunks]
+        results = fast_bm25_search(query, corpus, top_k=k)
+        return [(idx.ids[res["index"]], res["score"]) for res in results if res["index"] < len(idx.ids)]
 
     def get_chunks(self, ids: list[str]) -> dict[str, Chunk]:
         with self._lock:

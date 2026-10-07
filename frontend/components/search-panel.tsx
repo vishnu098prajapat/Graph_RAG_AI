@@ -19,7 +19,7 @@ function highlightTerms(text: string, query: string): string {
     .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
   if (!terms.length) return text;
   const re = new RegExp(`(${terms.join("|")})`, "gi");
-  return text.replace(re, `<mark style="background:rgba(56,189,248,0.2);color:#0369a1;font-weight:600;border-radius:3px;padding:0 2px;">$1</mark>`);
+  return text.replace(re, `<mark style="background:rgba(99,102,241,0.2);color:#3730a3;font-weight:600;border-radius:3px;padding:0 2px;">$1</mark>`);
 }
 
 // ── Result card ───────────────────────────────────────────────────────────────
@@ -64,7 +64,7 @@ function ResultCard({
     ? `Page ${uniquePages[0]}`
     : null;
   const docIdx    = docs.findIndex((d) => d.id === result.doc_id);
-  const color     = docIdx >= 0 ? docColor(docIdx) : { dot: "#0ea5e9", bg: "rgba(14,165,233,0.1)", text: "#0369a1" };
+  const color     = docIdx >= 0 ? docColor(docIdx) : { dot: "#0ea5e9", bg: "rgba(14,165,233,0.1)", text: "#3730a3" };
   const docInfo   = docIdx >= 0 ? docs[docIdx] : null;
 
   return (
@@ -76,15 +76,15 @@ function ResultCard({
       onClick={() => onSelect(result, query)}
       className="cursor-pointer rounded-xl border p-3 transition-all duration-150 hover:shadow-md"
       style={{
-        borderColor: isSelected ? "#7dd3fc" : "#e0f2fe",
-        background:  isSelected ? "rgba(240,249,255,0.8)" : "white",
+        borderColor: isSelected ? "#c7d2fe" : "#e0e7ff",
+        background:  isSelected ? "rgba(238,242,255,0.8)" : "white",
       }}
     >
       {/* Top row: rank + doc badge + page */}
       <div className="flex items-center gap-2 mb-2">
         {/* Rank badge */}
         <span className="shrink-0 text-[10px] font-black text-white rounded-full w-5 h-5 flex items-center justify-center"
-          style={{ background: "linear-gradient(135deg,#38bdf8,#0284c7)" }}>
+          style={{ background: "linear-gradient(135deg,#818cf8,#4f46e5)" }}>
           {rank}
         </span>
 
@@ -100,7 +100,7 @@ function ResultCard({
         {/* Page badge — prominent */}
         {pageText != null && (
           <span className="ml-auto shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold shadow-sm"
-            style={{ background: "#e0f2fe", color: "#0369a1", border: "1px solid #bae6fd" }}>
+            style={{ background: "#e0e7ff", color: "#3730a3", border: "1px solid #bae6fd" }}>
             {pageText}
           </span>
         )}
@@ -129,10 +129,10 @@ function ResultCard({
       {expanded && (
         <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
           transition={{ duration: 0.2 }} className="overflow-hidden">
-          <div className="mt-3 rounded-lg bg-slate-50 p-2.5 text-[10px] text-slate-600 space-y-1">
+          <div className="mt-3 rounded-lg bg-white p-2.5 text-[10px] text-slate-600 space-y-1">
             <p className="font-semibold text-slate-700 mb-1">Retrieval signals</p>
-            {result.signals.dense_rank  != null && <p>Dense rank:   <span className="text-sky-600 font-medium">#{result.signals.dense_rank}</span></p>}
-            {result.signals.sparse_rank != null && <p>Sparse rank:  <span className="text-sky-600 font-medium">#{result.signals.sparse_rank}</span></p>}
+            {result.signals.dense_rank  != null && <p>Dense rank:   <span className="text-indigo-600 font-medium">#{result.signals.dense_rank}</span></p>}
+            {result.signals.sparse_rank != null && <p>Sparse rank:  <span className="text-indigo-600 font-medium">#{result.signals.sparse_rank}</span></p>}
             {result.signals.rerank      != null && <p>Rerank score: <span className="text-emerald-600 font-medium">{result.signals.rerank.toFixed(3)}</span></p>}
             <p>RRF score: <span className="text-slate-700 font-medium">{result.signals.rrf.toFixed(4)}</span></p>
           </div>
@@ -140,7 +140,7 @@ function ResultCard({
             <div className="mt-2 flex flex-wrap gap-1.5">
               {result.citations.map((c, i) => (
                 <span key={i}
-                  className="rounded-full bg-sky-50 border border-sky-200 px-2 py-0.5 text-[10px] font-medium text-sky-700">
+                  className="rounded-full bg-indigo-50/50 border border-indigo-200 px-2 py-0.5 text-[10px] font-medium text-indigo-700">
                   p.{c.page}
                 </span>
               ))}
@@ -220,7 +220,7 @@ export function SearchPanel({
       <div className="shrink-0 border-b border-slate-100 px-4 py-3">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-bold text-slate-700 flex items-center gap-1.5">
-            <Search className="w-3.5 h-3.5 text-sky-500" />
+            <Search className="w-3.5 h-3.5 text-indigo-500" />
             Search
           </h2>
           {/* Cross-doc toggle (only when multiple docs) */}
@@ -230,7 +230,7 @@ export function SearchPanel({
               className="flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-semibold transition-all"
               style={{
                 background: crossDoc
-                  ? "linear-gradient(135deg,#38bdf8,#0284c7)"
+                  ? "linear-gradient(135deg,#818cf8,#4f46e5)"
                   : "rgba(0,0,0,0.04)",
                 color: crossDoc ? "white" : "#64748b",
               }}
@@ -249,7 +249,7 @@ export function SearchPanel({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={crossDoc && docs.length > 1 ? "Search all documents…" : "Ask a question…"}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm text-slate-700 placeholder:text-slate-400 outline-none transition-all focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+              className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm text-slate-700 placeholder:text-slate-400 outline-none transition-all focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100"
             />
           </div>
 
@@ -259,7 +259,7 @@ export function SearchPanel({
               <button key={m} type="button" onClick={() => setMode(m)}
                 className="flex-1 rounded-lg py-1.5 text-[11px] font-semibold transition-all"
                 style={{
-                  background: mode === m ? "linear-gradient(135deg,#38bdf8,#0284c7)" : "transparent",
+                  background: mode === m ? "linear-gradient(135deg,#818cf8,#4f46e5)" : "transparent",
                   color:      mode === m ? "white" : "#94a3b8",
                   border:     `1px solid ${mode === m ? "transparent" : "#e2e8f0"}`,
                 }}>
@@ -272,7 +272,7 @@ export function SearchPanel({
             type="submit"
             disabled={!query.trim() || loading}
             className="w-full rounded-xl py-2 text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            style={{ background: "linear-gradient(135deg,#38bdf8,#0284c7)" }}>
+            style={{ background: "linear-gradient(135deg,#818cf8,#4f46e5)" }}>
             {loading
               ? <><span className="animate-spin text-xs">⟳</span> Searching…</>
               : <><Search className="w-3.5 h-3.5" /> Search</>}
@@ -292,17 +292,17 @@ export function SearchPanel({
 
         {/* Timings */}
         {timings && !error && (
-          <div className="rounded-xl bg-slate-50 border border-slate-100 px-3 py-2.5 text-[10px] text-slate-500 flex flex-wrap gap-x-3 gap-y-1">
+          <div className="rounded-xl bg-white border border-slate-100 px-3 py-2.5 text-[10px] text-slate-500 flex flex-wrap gap-x-3 gap-y-1">
             {Object.entries(timings).map(([k, v]) => (
               <span key={k}>
                 {k}:{" "}
-                <span className="font-semibold text-sky-600">{v.toFixed(1)} ms</span>
+                <span className="font-semibold text-indigo-600">{v.toFixed(1)} ms</span>
               </span>
             ))}
             <span className="ml-auto font-semibold text-slate-600">
               {validResults.length} results
               {crossDoc && docs.length > 1 && (
-                <span className="ml-1 text-sky-500">· all docs</span>
+                <span className="ml-1 text-indigo-500">· all docs</span>
               )}
             </span>
           </div>
@@ -345,7 +345,7 @@ export function SearchPanel({
           <div className="flex flex-col items-center justify-center py-10 text-center">
             <div className="w-10 h-10 rounded-xl mb-3 flex items-center justify-center"
               style={{ background: "linear-gradient(135deg,rgba(56,189,248,0.15),rgba(2,132,199,0.15))" }}>
-              <Zap className="w-5 h-5 text-sky-400" />
+              <Zap className="w-5 h-5 text-indigo-400" />
             </div>
             <p className="text-sm font-medium text-slate-500">Ask anything about your documents</p>
             <p className="text-xs text-slate-400 mt-1">
@@ -359,3 +359,4 @@ export function SearchPanel({
     </div>
   );
 }
+

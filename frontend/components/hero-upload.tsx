@@ -179,7 +179,7 @@ function FileRow({
 
 type Phase = "idle" | "selected" | "uploading" | "done";
 
-function UploadCard({ onReady }: { onReady: (docs: DocInfo[]) => void }) {
+export function UploadCard({ onReady }: { onReady: (docs: DocInfo[]) => void }) {
   const [phase,    setPhase]    = useState<Phase>("idle");
   const [files,    setFiles]    = useState<File[]>([]);
   const [batch,    setBatch]    = useState<BatchProgress | null>(null);
@@ -258,27 +258,25 @@ function UploadCard({ onReady }: { onReady: (docs: DocInfo[]) => void }) {
               onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
               onDragLeave={() => setDragOver(false)}
               onClick={() => fileRef.current?.click()}
-              className="relative cursor-pointer rounded-2xl border-2 border-dashed px-8 py-10 text-center transition-all duration-200"
-              style={{
-                borderColor:    dragOver ? "#38bdf8" : "#cbd5e1",
-                background:     dragOver ? "rgba(56,189,248,0.04)" : "rgba(255,255,255,0.8)",
-                backdropFilter: "blur(12px)",
-              }}
+              className={`relative cursor-pointer rounded-3xl border-2 border-dashed px-8 py-16 text-center transition-all duration-300 shadow-sm hover:shadow-md ${
+                dragOver ? "border-indigo-500 bg-indigo-50/80 scale-[1.02]" : "border-slate-300 bg-white hover:border-indigo-400 hover:bg-slate-50"
+              }`}
             >
-              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl"
-                style={{ background: "linear-gradient(135deg,#38bdf8,#0284c7)" }}>
-                <FileUp className="w-6 h-6 text-white" />
+              <div className={`mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl transition-colors duration-300 ${
+                dragOver ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200" : "bg-indigo-100 text-indigo-600 group-hover:bg-indigo-200"
+              }`}>
+                <FileUp className="w-8 h-8" />
               </div>
-              <p className="text-base font-semibold text-slate-700">Drop PDFs here — no limits</p>
-              <p className="mt-1 text-sm text-slate-400">or click to browse</p>
-              <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-3 py-1">
-                <Zap className="w-3 h-3 text-amber-500" />
-                <span className="text-[11px] font-medium text-slate-500">30–300 pages, same speed</span>
+              <p className="text-xl font-bold text-slate-800 mb-2">Drag & drop your documents here</p>
+              <p className="text-sm text-slate-500 mb-6">or click to browse from your computer</p>
+              <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 border border-slate-200 px-4 py-1.5 shadow-sm">
+                <Zap className="w-4 h-4 text-amber-500 fill-amber-500" />
+                <span className="text-xs font-bold text-slate-600 uppercase tracking-wide">Supports up to 10,000 pages</span>
               </div>
             </div>
             <input ref={fileRef} type="file" accept="application/pdf,.pdf" multiple className="hidden"
               onChange={(e) => e.target.files && addFiles(e.target.files)} />
-            {error && <p className="mt-2 text-center text-xs text-red-500">{error}</p>}
+            {error && <p className="mt-4 text-center text-sm font-semibold text-red-500 bg-red-50 py-2 rounded-lg border border-red-100">{error}</p>}
           </motion.div>
         )}
 
@@ -389,29 +387,57 @@ function UploadCard({ onReady }: { onReady: (docs: DocInfo[]) => void }) {
   );
 }
 
-// ── Landing sections ──────────────────────────────────────────────────────────
+// ── Premium SaaS Landing Sections ──────────────────────────────────────────────────────────
 
-function FeaturesSection() {
-  const items = [
-    { icon: Brain,    title: "Semantic chunking",   desc: "Topic-aware splits preserve context across page breaks. No arbitrary size limits." },
-    { icon: Search,   title: "Hybrid retrieval",    desc: "BM25 + dense vectors fused with RRF. Lexical reranker sharpens top-k results." },
-    { icon: FileText, title: "Exact citations",     desc: "Every answer traces back to the sentence, page and bounding box — no hallucinations." },
-    { icon: Zap,      title: "Knowledge graph",     desc: "Entity co-occurrence graph auto-built per document, navigable in the workbench." },
+function OmniHeader() {
+  return (
+    <header className="fixed top-0 inset-x-0 h-16 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 flex items-center justify-between px-6 sm:px-12">
+      <div className="flex items-center gap-2 cursor-pointer">
+        <div className="h-7 w-7 rounded-lg flex items-center justify-center bg-gradient-to-br from-sky-400 to-sky-600 shadow-sm">
+          <Zap className="w-4 h-4 text-white" />
+        </div>
+        <span className="text-xl font-black tracking-tight text-slate-800">Omni</span>
+      </div>
+      <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+        <a href="#" className="hover:text-sky-500 transition-colors">Tools</a>
+        <a href="#" className="hover:text-sky-500 transition-colors">Pricing</a>
+        <a href="#" className="hover:text-sky-500 transition-colors">API</a>
+        <a href="#" className="hover:text-sky-500 transition-colors">About</a>
+      </nav>
+      <div className="flex items-center gap-4">
+        <button className="hidden sm:block text-sm font-semibold text-slate-600 hover:text-sky-500 transition-colors">Log in</button>
+        <button className="text-sm font-bold text-white bg-slate-800 px-5 py-2 rounded-full hover:bg-slate-700 transition-colors shadow-sm">
+          Sign up
+        </button>
+      </div>
+    </header>
+  );
+}
+
+function MicroToolsGrid() {
+  const tools = [
+    { icon: Brain, title: "Chat with Document", desc: "Interact with massive 10,000-page files instantly without limits." },
+    { icon: Search, title: "Legal Contract Analyzer", desc: "Instantly find loopholes, hidden clauses, and risks in legal documents." },
+    { icon: Plus, title: "Merge Heavy Files", desc: "Combine 500MB+ documents seamlessly. Zero file-size restrictions." },
+    { icon: FileText, title: "Extract Pages", desc: "Split or pull out specific pages from heavy books and magazines." },
+    { icon: Zap, title: "Compress Document", desc: "Reduce huge file sizes heavily without losing visual quality." },
+    { icon: XCircle, title: "Unlock & Decrypt", desc: "Remove passwords from protected files in bulk securely." },
   ];
   return (
-    <section className="py-20 px-6">
-      <div className="mx-auto max-w-5xl">
-        <p className="text-center text-xs font-semibold uppercase tracking-widest text-sky-500 mb-2">Capabilities</p>
-        <h2 className="text-center text-3xl font-bold text-slate-800 mb-12">Built for real documents</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {items.map((f) => (
-            <div key={f.title} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-3 inline-flex h-9 w-9 items-center justify-center rounded-xl"
-                style={{ background: "linear-gradient(135deg,#38bdf8,#0284c7)" }}>
-                <f.icon className="w-4 h-4 text-white" />
+    <section className="py-24 px-6 bg-slate-50 border-t border-slate-100">
+      <div className="mx-auto max-w-6xl">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight mb-4">One Workspace. Every Tool You Need.</h2>
+          <p className="text-slate-500 text-lg max-w-2xl mx-auto">Stop paying premium fees for basic tasks. We provide the fastest, unrestricted document suite on the internet.</p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {tools.map((t) => (
+            <div key={t.title} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-sky-200 transition-all cursor-pointer group">
+              <div className="h-12 w-12 rounded-xl bg-sky-50 flex items-center justify-center mb-5 group-hover:bg-sky-500 transition-colors">
+                <t.icon className="w-5 h-5 text-sky-500 group-hover:text-white transition-colors" />
               </div>
-              <h3 className="text-sm font-semibold text-slate-800 mb-1">{f.title}</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">{f.desc}</p>
+              <h3 className="text-lg font-bold text-slate-800 mb-2">{t.title}</h3>
+              <p className="text-sm text-slate-500 leading-relaxed">{t.desc}</p>
             </div>
           ))}
         </div>
@@ -420,87 +446,17 @@ function FeaturesSection() {
   );
 }
 
-function HowItWorksSection() {
-  const steps = [
-    { n: "01", title: "Upload PDFs",    desc: "Drop 1–50 documents. Files up to 1,000 pages process asynchronously with live progress." },
-    { n: "02", title: "Ask anything",   desc: "Hybrid search spans all your documents simultaneously to find the best passages." },
-    { n: "03", title: "Get answers",    desc: "Results link to the exact page and sentence. Click any citation to jump there." },
-  ];
+function PrivacySection() {
   return (
-    <section className="py-20 px-6 bg-slate-50">
-      <div className="mx-auto max-w-4xl">
-        <p className="text-center text-xs font-semibold uppercase tracking-widest text-sky-500 mb-2">How it works</p>
-        <h2 className="text-center text-3xl font-bold text-slate-800 mb-12">Three steps to clarity</h2>
-        <div className="flex flex-col sm:flex-row relative">
-          {steps.map((s, i) => (
-            <div key={s.n} className="flex-1 relative px-6 py-6 text-center">
-              {i < steps.length - 1 && (
-                <ChevronRight className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 text-slate-300 w-5 h-5 z-10" />
-              )}
-              <div className="mx-auto mb-3 text-3xl font-black"
-                style={{ background: "linear-gradient(135deg,#38bdf8,#0284c7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                {s.n}
-              </div>
-              <h3 className="text-base font-semibold text-slate-800 mb-1">{s.title}</h3>
-              <p className="text-sm text-slate-500 leading-relaxed">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PerformanceSection() {
-  const stats = [
-    { val: "~2.7 ms", label: "Median query latency", note: "hybrid mode, 10 k chunks" },
-    { val: "< 1 s",   label: "Index 300-page PDF",   note: "HashingEmbedder, M1 Pro" },
-    { val: "0 bytes", label: "External API calls",   note: "fully local & private" },
-    { val: "50+",     label: "Simultaneous PDFs",    note: "single batch upload" },
-  ];
-  return (
-    <section className="py-20 px-6">
-      <div className="mx-auto max-w-5xl">
-        <p className="text-center text-xs font-semibold uppercase tracking-widest text-sky-500 mb-2">Performance</p>
-        <h2 className="text-center text-3xl font-bold text-slate-800 mb-12">30–300 pages, same speed</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((s) => (
-            <div key={s.val} className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm text-center">
-              <div className="text-3xl font-black mb-1"
-                style={{ background: "linear-gradient(135deg,#38bdf8,#0ea5e9,#0284c7)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                {s.val}
-              </div>
-              <p className="text-sm font-semibold text-slate-700 mb-0.5">{s.label}</p>
-              <p className="text-xs text-slate-400">{s.note}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function TechStackSection() {
-  const stack = [
-    ["FastAPI",         "Python API server"],
-    ["Next.js 15",      "React 19 frontend"],
-    ["PyMuPDF",         "PDF parsing + layout"],
-    ["BM25 + RRF",      "Sparse-dense fusion"],
-    ["Framer Motion",   "Fluid animations"],
-    ["HashingEmbedder", "Zero-dependency vectors"],
-  ];
-  return (
-    <section className="py-20 px-6 bg-slate-50">
-      <div className="mx-auto max-w-4xl">
-        <p className="text-center text-xs font-semibold uppercase tracking-widest text-sky-500 mb-2">Tech stack</p>
-        <h2 className="text-center text-3xl font-bold text-slate-800 mb-10">Built on solid foundations</h2>
-        <div className="flex flex-wrap justify-center gap-3">
-          {stack.map(([name, desc]) => (
-            <div key={name} className="rounded-xl border border-slate-200 bg-white px-4 py-2 shadow-sm">
-              <span className="text-sm font-semibold text-slate-800">{name}</span>
-              <span className="ml-2 text-xs text-slate-400">{desc}</span>
-            </div>
-          ))}
+    <section className="py-20 px-6 bg-white">
+      <div className="mx-auto max-w-4xl text-center">
+        <h2 className="text-3xl font-bold text-slate-800 mb-6">100% Private. Zero Retention.</h2>
+        <p className="text-slate-500 text-lg leading-relaxed mb-8">
+          We are so private that we don't even own a database. Your files are processed entirely in ephemeral memory. 
+          The moment you close your tab, our servers automatically self-destruct your data. No traces left behind.
+        </p>
+        <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-emerald-600 font-semibold text-sm border border-emerald-100">
+          <CheckCircle2 className="w-4 h-4" /> End-to-end Ephemeral Processing
         </div>
       </div>
     </section>
@@ -510,84 +466,65 @@ function TechStackSection() {
 // ── Main export ───────────────────────────────────────────────────────────────
 
 export function HeroUpload({ onReady }: { onReady: (docs: DocInfo[]) => void }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  useParticleCanvas(canvasRef as React.RefObject<HTMLCanvasElement | null>);
-
   return (
-    <div className="min-h-screen bg-sky-50/50" style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif" }}>
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <OmniHeader />
 
       {/* ── Hero section ── */}
-      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-20">
-        <canvas ref={canvasRef}
-          className="pointer-events-none absolute inset-0 w-full h-full" aria-hidden />
+      <section className="relative flex flex-col items-center justify-center pt-32 pb-20 px-6 min-h-[90vh]">
+        
         <div className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(56,189,248,0.08) 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(56,189,248,0.1) 0%, transparent 70%)" }}
           aria-hidden />
 
-        <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-pink-200 bg-white/80 px-4 py-1.5 shadow-sm backdrop-blur">
-          <Brain className="w-3.5 h-3.5 text-sky-500" />
-          <span className="text-xs font-semibold text-slate-600">Graph-RAG · Hybrid Retrieval · Exact Citations</span>
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 shadow-sm">
+          <span className="flex h-2 w-2 rounded-full bg-sky-500 animate-pulse" />
+          <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Version 2.0 is Live</span>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-4">
-          <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-none text-slate-800">
-            Ask your documents.
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-6 max-w-3xl mx-auto">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-tight text-slate-900 mb-4">
+            Your Universal Workspace.
           </h1>
-          <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-none"
-            style={{ background: "linear-gradient(135deg,#38bdf8 0%,#0ea5e9 50%,#0284c7 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Get exact answers.
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight leading-tight"
+            style={{ background: "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+            No Limits. No Sign-ups.
           </h1>
         </motion.div>
 
-        <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.5 }}
-          className="mb-10 max-w-xl text-center text-lg text-slate-500">
-          Upload 1–50 PDFs. CogniGraph indexes every page, builds a knowledge graph, and answers
-          any question with citations pointing to the exact paragraph.
+        <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="mb-12 max-w-xl text-center text-lg text-slate-500 leading-relaxed">
+          The fastest, most secure suite of document tools. Drop massive files up to 10,000 pages and let our engine do the heavy lifting in seconds.
         </motion.p>
 
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.5 }} className="w-full max-w-xl">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }} className="w-full max-w-xl relative z-10">
           <UploadCard onReady={onReady} />
         </motion.div>
       </section>
 
-      <FeaturesSection />
-      <HowItWorksSection />
-      <PerformanceSection />
-      <TechStackSection />
-
-      {/* CTA */}
-      <section className="py-20 px-6">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold text-slate-800 mb-4">Ready to explore your documents?</h2>
-          <p className="text-slate-500 mb-8">
-            Drop your PDFs above and get answers in seconds — no cloud, no API key, no limits.
-          </p>
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white shadow-lg hover:scale-[1.03] transition-all active:scale-[0.98]"
-            style={{ background: "linear-gradient(135deg,#38bdf8,#0284c7)" }}>
-            <Upload className="w-4 h-4" /> Upload your first PDF
-          </button>
-        </div>
-      </section>
+      <MicroToolsGrid />
+      <PrivacySection />
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 py-8 px-6">
-        <div className="mx-auto max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-slate-100 bg-white py-12 px-6">
+        <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2">
-            <div className="h-6 w-6 rounded-lg flex items-center justify-center"
-              style={{ background: "linear-gradient(135deg,#38bdf8,#0284c7)" }}>
-              <Brain className="w-3.5 h-3.5 text-white" />
+            <div className="h-6 w-6 rounded-md flex items-center justify-center bg-slate-800">
+              <Zap className="w-3 h-3 text-white" />
             </div>
-            <span className="text-sm font-bold text-slate-700">CogniGraph AI</span>
+            <span className="text-sm font-bold text-slate-800">Omni</span>
           </div>
-          <p className="text-xs text-slate-400">Autonomous Graph-RAG · runs entirely on your machine</p>
+          <div className="flex gap-6 text-sm font-medium text-slate-500">
+            <a href="#" className="hover:text-slate-800 transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-slate-800 transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-slate-800 transition-colors">Contact</a>
+          </div>
+          <p className="text-sm text-slate-400">© 2026 Omni Workspace. All rights reserved.</p>
         </div>
       </footer>
     </div>

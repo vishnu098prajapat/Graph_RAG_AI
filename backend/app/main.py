@@ -165,6 +165,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from .tools_router import router as tools_router
+app.include_router(tools_router)
+
 
 # ── Health ────────────────────────────────────────────────────────────────────
 

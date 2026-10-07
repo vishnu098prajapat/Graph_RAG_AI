@@ -54,11 +54,15 @@ def parse_pdf(data: bytes) -> tuple[list[Page], list[str]]:
     else:
         chunk_size = ceil(n / n_workers)
         slices = [(data, list(range(i, min(i + chunk_size, n)))) for i in range(0, n, chunk_size)]
-        with ProcessPoolExecutor(max_workers=n_workers) as pool:
-            out = list(pool.map(_parse_page_slice, slices))
-            raw_results = []
-            for r in out:
-                raw_results.extend(r)
+        try:
+            with ProcessPoolExecutor(max_workers=n_workers) as pool:
+                out = list(pool.map(_parse_page_slice, slices))
+                raw_results = []
+                for r in out:
+                    raw_results.extend(r)
+        except Exception:
+            # Fallback gracefully to single-threaded parsing if worker pool hits system memory limits
+            raw_results = _parse_page_slice((data, list(range(n))))
         raw_results.sort(key=lambda r: r[0])
 
     pages: list[Page] = []

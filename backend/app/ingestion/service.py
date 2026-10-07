@@ -14,7 +14,7 @@ from .graph_builder import build_graph
 from .parser import parse_pdf
 
 # Chunks per embedding micro-batch — keeps memory bounded for large docs.
-EMBED_BATCH = 16
+EMBED_BATCH = 32
 
 # (stage, processed, total) → None
 ProgressCb = Callable[[str, int, int], None]

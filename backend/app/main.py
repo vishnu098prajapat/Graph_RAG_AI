@@ -147,11 +147,6 @@ async def lifespan(app: FastAPI):
     app.state.ingestion = ingestion
     app.state.retriever = retriever
 
-    if settings.store == "memory":
-        for doc_id in registry.all_ids():
-            pages = sorted(registry.pages(doc_id).values(), key=lambda p: p.number)
-            ingestion.ingest_pages(registry.filename(doc_id), pages, doc_id=doc_id)
-            log.info("re-indexed %s", doc_id)
     yield
 
 
@@ -160,7 +155,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="CogniGraph API", version="0.2.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=list(Settings.from_env().cors_origins),
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )

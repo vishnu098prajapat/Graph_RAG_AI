@@ -6,20 +6,68 @@
 :root {
   --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body:    'Inter', system-ui, sans-serif;
+  --bg-page:   #FAF8F5;
+  --bg-card:   #FFFFFF;
+  --text-main: #111827;
+  --text-muted:#6B7280;
+  --border:    #E5E7EB;
+  color-scheme: light;
 }
 
-:root { color-scheme: light; }
+html.dark {
+  --bg-page:   #0f1117;
+  --bg-card:   #1a1d27;
+  --text-main: #F9FAFB;
+  --text-muted:#9CA3AF;
+  --border:    #2D3348;
+  color-scheme: dark;
+}
 
 html, body { height: 100%; }
 
 body {
-  background: #f0f9ff;
-  color: #1e1b4b;
+  background: var(--bg-page);
+  color: var(--text-main);
   font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
-::selection { background: rgba(2, 132, 199, 0.18); }
+/* Dark mode overrides for Omni pages */
+html.dark .bg-\[\#FAF8F5\] { background-color: #0f1117 !important; }
+html.dark .bg-white        { background-color: #1a1d27 !important; }
+html.dark .border-\[\#E5E7EB\]  { border-color: #2D3348 !important; }
+html.dark .text-\[\#111827\]    { color: #F9FAFB !important; }
+html.dark .text-\[\#6B7280\]    { color: #9CA3AF !important; }
+html.dark .text-\[\#4B5563\]    { color: #D1D5DB !important; }
+html.dark .text-\[\#374151\]    { color: #E5E7EB !important; }
+html.dark .bg-\[\#F3F4F6\]      { background-color: #1E2130 !important; }
+html.dark .bg-slate-50          { background-color: #1a1d27 !important; }
+html.dark .bg-slate-200         { background-color: #2D3348 !important; }
+html.dark .border-slate-200     { border-color: #2D3348 !important; }
+html.dark .border-slate-100     { border-color: #1E2130 !important; }
+html.dark .text-slate-900       { color: #F9FAFB !important; }
+html.dark .text-slate-600       { color: #9CA3AF !important; }
+html.dark .text-slate-500       { color: #6B7280 !important; }
+html.dark .text-slate-800       { color: #E5E7EB !important; }
+html.dark .text-slate-700       { color: #D1D5DB !important; }
+html.dark .bg-slate-900         { background-color: #10b981 !important; }
+html.dark .hover\:bg-black:hover{ background-color: #059669 !important; }
+html.dark .shadow-sm            { box-shadow: 0 1px 3px rgba(0,0,0,0.4) !important; }
+html.dark .text-\[\#9CA3AF\]    { color: #6B7280 !important; }
+
+/* Card hover in dark */
+html.dark [class*="hover:shadow-xl"]:hover {
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
+}
+
+/* Glassmorphism header in dark */
+html.dark .backdrop-blur-xl {
+  background: rgba(15,17,23,0.75) !important;
+  border-bottom-color: rgba(255,255,255,0.06) !important;
+}
+
+::selection { background: rgba(16,185,129,0.25); }
 
 /* slim scrollbars */
 * { scrollbar-width: thin; scrollbar-color: rgba(0,0,0,0.12) transparent; }
@@ -30,11 +78,5 @@ body {
   .bg-dot-grid {
     background-image: radial-gradient(circle, rgba(56,189,248,0.18) 1px, transparent 1px);
     background-size: 28px 28px;
-  }
-  .text-gradient-pink-sky {
-    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #0284c7 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 }

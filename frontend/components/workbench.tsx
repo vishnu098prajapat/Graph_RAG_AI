@@ -47,7 +47,7 @@ function PdfViewer({
   const iframeKey = `${src}-${jumpKey || 0}`;
 
   return (
-    <div className="relative flex h-full flex-col overflow-hidden rounded-xl border border-sky-100 bg-[#FAF8F5] shadow-sm">
+    <div className="relative flex h-full flex-col overflow-hidden rounded-xl border border-emerald-100 bg-[#FAF8F5] shadow-sm">
       <iframe
         key={iframeKey}
         src={src}
@@ -136,8 +136,8 @@ export function Workbench({ docs, onReset }: WorkbenchProps) {
           {docs.length === 1 ? (
             /* Single doc: show filename + stats inline */
             <div className="flex items-center gap-3 min-w-0">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg shrink-0 bg-indigo-50 border border-indigo-100">
-                <FileText className="w-4 h-4 text-indigo-500" />
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg shrink-0 bg-emerald-50 border border-emerald-100">
+                <FileText className="w-4 h-4 text-emerald-500" />
               </div>
               <span className="text-sm font-semibold text-slate-800 truncate max-w-[200px] sm:max-w-[400px]">
                 {activeDoc.filename}
@@ -264,7 +264,7 @@ export function Workbench({ docs, onReset }: WorkbenchProps) {
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rounded-full bg-sky-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
+    <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
       {children}
     </span>
   );

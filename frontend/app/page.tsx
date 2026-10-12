@@ -1,154 +1,257 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { Zap, Play, Star, Brain, Search, Plus, FileText, XCircle, Unlock, Edit3 } from "lucide-react";
+import { Star, Brain, Plus, XCircle, Image as ImageIcon, FileSpreadsheet, Database, Headphones, ShieldCheck, ScanText, FileType2, Zap } from "lucide-react";
+import ScrollHeader from "@/components/scroll-header";
+
+export const metadata: Metadata = {
+  title: "Omni — Free PDF Tools. No Sign-up. No Limits.",
+  description:
+    "Free online PDF tools — merge, compress, OCR, chat with documents, convert to Word/Excel. Process PDFs up to 10,000 pages. 100% private, no sign-up required.",
+  keywords: [
+    "free pdf tools online",
+    "pdf editor no sign up",
+    "merge pdf free",
+    "compress pdf online",
+    "ocr pdf to text",
+    "chat with pdf ai",
+    "pdf to word converter free",
+    "pdf tools no registration",
+    "pdf converter online free",
+    "pdf tools 10000 pages",
+  ],
+  alternates: { canonical: "https://omni-pdf.com" },
+  openGraph: {
+    title: "Omni — Free PDF Tools. No Sign-up. No Limits.",
+    description:
+      "Merge, compress, OCR, chat with documents, convert to Word/Excel. Process PDFs up to 10,000 pages. 100% private.",
+    url: "https://omni-pdf.com",
+  },
+};
+
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Omni PDF Tools",
+  applicationCategory: "UtilitiesApplication",
+  operatingSystem: "Any",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  description:
+    "Free online PDF tools — merge, compress, OCR, convert to Word/Excel, chat with AI. No sign-up, no file size limits.",
+  url: "https://omni-pdf.com",
+  featureList: [
+    "Chat with PDF using AI",
+    "Merge PDF files with no size limit",
+    "Compress PDF",
+    "OCR - PDF and Image to Text (Hindi + English)",
+    "PDF to Word converter",
+    "PDF to Excel converter",
+    "Redact sensitive information",
+    "Unlock PDF password",
+    "Extract PDF pages",
+    "Image to PDF converter",
+    "Extract leads from PDF",
+    "PDF to Audiobook",
+  ],
+};
+
+const tools = [
+  {
+    id: "chat-with-pdf",
+    icon: Brain,
+    title: "Chat with Document",
+    desc: "Interact with massive 10,000-page files instantly without limits. Perfect for researchers and students.",
+    href: "/chat-with-pdf",
+    badge: "Flagship",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "merge",
+    icon: Plus,
+    title: "Merge Heavy Files",
+    desc: "Combine 500MB+ documents seamlessly. Zero file-size restrictions.",
+    href: "/merge-pdf",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "redact",
+    icon: ShieldCheck,
+    title: "Auto-Censor / Redact",
+    desc: "Permanently blackout sensitive information (Emails, Phones, Cards) from your PDFs securely offline.",
+    href: "/redact",
+    badge: "High Security",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "data-extractor",
+    icon: Database,
+    title: "Lead & Data Extractor",
+    desc: "Mine Emails, Phone numbers, and Website Links from massive reports directly into a clean CSV.",
+    href: "/data-extractor",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "audiobook",
+    icon: Headphones,
+    title: "PDF to Audiobook",
+    desc: "Listen to your PDFs like podcasts. Features page-by-page streaming, adjustable voices, and speed controls.",
+    href: "/audiobook",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "pdf-excel",
+    icon: FileSpreadsheet,
+    title: "Bank Statement to Excel",
+    desc: "Securely convert PDF statements and invoices to Excel format. 100% offline, privacy-first processing.",
+    href: "/pdf-to-excel",
+    badge: "Popular",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "ocr",
+    icon: ScanText,
+    title: "OCR — PDF & Image to Text",
+    desc: "Extract editable text from scanned PDFs & mobile photos (JPG, PNG) in English + Hindi with instant copy & download.",
+    href: "/ocr",
+    badge: "Hindi + English",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "compress",
+    icon: Zap,
+    title: "Compress Document",
+    desc: "Reduce huge file sizes heavily without losing visual quality.",
+    href: "/compress-pdf",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "unlock",
+    icon: XCircle,
+    title: "Unlock & Decrypt",
+    desc: "Remove passwords from protected files in bulk securely.",
+    href: "/unlock-pdf",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "image-converter",
+    icon: ImageIcon,
+    title: "Image Format Converter",
+    desc: "Convert JPG, PNG, WebP, HEIC & GIF images in bulk with 100% loss-free quality.",
+    href: "/image-to-pdf",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+  {
+    id: "pdf-to-word",
+    icon: FileType2,
+    title: "PDF to Word",
+    desc: "Convert any PDF into a fully editable .docx Word file. Layout preserved, text extracted — 100% offline.",
+    href: "/pdf-to-word",
+    colorClass: "text-emerald-600",
+    bgClass: "bg-emerald-50",
+    hoverBgClass: "group-hover:bg-emerald-500",
+    borderHoverClass: "hover:border-emerald-200",
+  },
+];
 
 export default function Home() {
-  const tools = [
-    { 
-      id: "chat-with-pdf",
-      icon: Brain, 
-      title: "Chat with Document", 
-      desc: "Interact with massive 10,000-page files instantly without limits. Perfect for researchers and students.",
-      href: "/chat-with-pdf",
-      badge: "Flagship",
-      colorClass: "text-indigo-600",
-      bgClass: "bg-indigo-50",
-      hoverBgClass: "group-hover:bg-indigo-500",
-      borderHoverClass: "hover:border-indigo-200"
-    },
-    
-    { 
-      id: "merge",
-      icon: Plus, 
-      title: "Merge Heavy Files", 
-      desc: "Combine 500MB+ documents seamlessly. Zero file-size restrictions.",
-      href: "/merge-pdf",
-      colorClass: "text-emerald-600",
-      bgClass: "bg-emerald-50",
-      hoverBgClass: "group-hover:bg-emerald-500",
-      borderHoverClass: "hover:border-emerald-200"
-    },
-    { 
-      id: "split",
-      icon: FileText, 
-      title: "Extract Pages", 
-      desc: "Split or pull out specific pages from heavy books and magazines.",
-      href: "/extract-pdf",
-      colorClass: "text-amber-600",
-      bgClass: "bg-amber-50",
-      hoverBgClass: "group-hover:bg-amber-500",
-      borderHoverClass: "hover:border-amber-200"
-    },
-    { 
-      id: "edit",
-      icon: Edit3, 
-      title: "Document Editor", 
-      desc: "Extract perfect text from PDF, format it, style it, and re-export instantly.",
-      href: "/edit-pdf",
-      colorClass: "text-teal-600",
-      bgClass: "bg-teal-50",
-      hoverBgClass: "group-hover:bg-teal-500",
-      borderHoverClass: "hover:border-teal-200"
-    },
-    { 
-      id: "compress",
-      icon: Zap, 
-      title: "Compress Document", 
-      desc: "Reduce huge file sizes heavily without losing visual quality.",
-      href: "/compress-pdf",
-      colorClass: "text-sky-600",
-      bgClass: "bg-sky-50",
-      hoverBgClass: "group-hover:bg-sky-500",
-      borderHoverClass: "hover:border-sky-200"
-    },
-    { 
-      id: "unlock",
-      icon: XCircle, 
-      title: "Unlock & Decrypt", 
-      desc: "Remove passwords from protected files in bulk securely.",
-      href: "/unlock-pdf",
-      colorClass: "text-fuchsia-600",
-      bgClass: "bg-fuchsia-50",
-      hoverBgClass: "group-hover:bg-fuchsia-500",
-      borderHoverClass: "hover:border-fuchsia-200"
-    },
-  ];
-
   return (
     <main className="min-h-screen bg-[#FAF8F5]" style={{ fontFamily: "'Inter', sans-serif" }}>
-      {/* Navbar */}
-      <header className="absolute top-0 inset-x-0 h-20 z-50 flex items-center justify-between px-6 sm:px-12">
-        <div className="flex items-center gap-2 cursor-pointer">
-          <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-[#6366F1] shadow-sm">
-            <Zap className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900">Omni</span>
-        </div>
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-          <a href="#tools" className="hover:text-slate-900 transition-colors">Product</a>
-          <a href="#" className="hover:text-slate-900 transition-colors">Use cases</a>
-          <a href="#" className="hover:text-slate-900 transition-colors">Pricing</a>
-          <a href="#" className="hover:text-slate-900 transition-colors">Changelog</a>
-        </nav>
-        <div className="flex items-center gap-5">
-          <button className="hidden sm:block text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">Log in</button>
-          <button className="text-sm font-semibold text-white bg-[#111827] px-5 py-2.5 rounded-full hover:bg-black transition-colors shadow-sm">
-            Try it free
-          </button>
-        </div>
-      </header>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeSchema) }}
+      />
+
+      <ScrollHeader />
 
       {/* Hero Section */}
-      <section className="relative pt-[140px] pb-12 px-6 flex flex-col items-center justify-center text-center">
-        
+      <section className="relative pt-[140px] pb-12 px-4 sm:px-6 flex flex-col items-center justify-center text-center">
+
         {/* Badge */}
-        <div className="mb-10 inline-flex items-center gap-2 rounded-full bg-[#F3F4F6] pl-1 pr-4 py-1 hover:bg-[#E5E7EB] transition-colors cursor-pointer">
-          <span className="bg-[#6366F1] text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full">New</span>
-          <span className="text-sm font-medium text-[#4B5563]">10,000 page limit unlocked for free &rarr;</span>
+        <div className="mb-10 inline-flex items-center gap-2 rounded-full bg-[#F3F4F6] pl-1 pr-3 sm:pr-4 py-1 hover:bg-[#E5E7EB] transition-colors cursor-pointer">
+          <span className="bg-emerald-600 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full">New</span>
+          <span className="text-xs sm:text-sm font-medium text-[#4B5563]">10,000 page limit unlocked for free &rarr;</span>
         </div>
 
-        {/* Big Bold Headline - Exact 2 lines */}
+        {/* Big Bold Headline */}
         <div className="max-w-[1200px] mx-auto mb-6 w-full">
-          <h1 className="text-5xl sm:text-7xl lg:text-[88px] font-bold tracking-tight text-[#111827] leading-[1.05]">
-            <span className="whitespace-nowrap block">The universal workspace.</span>
-            <span className="text-[#6366F1] italic pr-2">No limits.</span> 
+          <h1 className="text-[1.75rem] sm:text-5xl lg:text-[88px] font-bold tracking-tight text-[#111827] leading-[1.05]">
+            <span className="block">The universal workspace.</span>
+            <span className="text-emerald-600 italic pr-2">No limits.</span>
             <span className="relative z-10 inline-block">
               No sign-ups.
-              <span className="absolute bottom-1 left-0 w-full h-[28px] bg-[#FDE047]/60 -z-10 rounded-sm transform -rotate-1"></span>
+              <span className="absolute bottom-1 left-0 w-full h-[20px] sm:h-[28px] bg-[#FDE047]/60 -z-10 rounded-sm transform -rotate-1"></span>
             </span>
           </h1>
         </div>
 
         {/* Subtitle */}
-        <p className="max-w-2xl mx-auto text-lg md:text-xl text-[#6B7280] leading-relaxed mb-8">
-          Omni reads, merges, and analyzes massive documents up to 10,000 pages. 
+        <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-[#6B7280] leading-relaxed mb-8 px-2">
+          Omni reads, merges, and analyzes massive documents up to 10,000 pages.
           Everything runs directly on your machine with zero retention.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
-          <a href="#tools" className="text-base font-semibold text-white bg-[#111827] px-8 py-3.5 rounded-full hover:bg-black transition-all hover:scale-[1.02] active:scale-95 shadow-lg w-full sm:w-auto">
+        {/* Single CTA Button */}
+        <div className="flex justify-center mb-8">
+          <a
+            href="#tools"
+            className="text-base font-semibold text-white bg-slate-900 px-10 py-3.5 rounded-full hover:bg-black transition-all hover:scale-[1.02] active:scale-95 shadow-lg"
+          >
             Start for free
           </a>
-          <button className="text-base font-semibold text-[#374151] bg-[#FAF8F5] border border-[#E5E7EB] px-8 py-3.5 rounded-full hover:bg-slate-50 transition-all hover:scale-[1.02] active:scale-95 shadow-sm inline-flex items-center justify-center gap-2 w-full sm:w-auto">
-            <div className="w-5 h-5 rounded-full bg-[#EEF2FF] flex items-center justify-center">
-              <Play className="w-2.5 h-2.5 text-[#6366F1] fill-[#6366F1] ml-0.5" />
-            </div>
-            Watch a 2-min demo
-          </button>
         </div>
 
         {/* Social Proof */}
         <div className="flex items-center justify-center gap-3">
           <div className="flex -space-x-2">
-            {[1,2,3,4,5].map((i) => (
-              <div key={i} className={`w-8 h-8 rounded-full border-2 border-white bg-slate-200 z-${10-i} overflow-hidden`}>
-                <img src={`https://api.dicebear.com/7.x/notionists/svg?seed=${i}&backgroundColor=e2e8f0`} alt="Avatar" />
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div
+                key={i}
+                className={`w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden`}
+                style={{ zIndex: 10 - i }}
+              >
+                <img
+                  src={`https://api.dicebear.com/7.x/notionists/svg?seed=${i}&backgroundColor=e2e8f0`}
+                  alt="Omni user"
+                  width={32}
+                  height={32}
+                />
               </div>
             ))}
           </div>
           <div className="flex flex-col items-start text-left">
             <div className="flex gap-1 mb-0.5">
-              {[1,2,3,4,5].map((i) => <Star key={i} className="w-3 h-3 text-[#F59E0B] fill-[#F59E0B]" />)}
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star key={i} className="w-3 h-3 text-[#F59E0B] fill-[#F59E0B]" />
+              ))}
               <span className="text-xs font-bold text-[#374151] ml-1">4.9</span>
             </div>
             <span className="text-[11px] text-[#6B7280]">from 4,000+ teams who hate limits</span>
@@ -156,13 +259,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Tools Grid Section (Directly Below Hero) */}
-      <section id="tools" className="max-w-[1280px] mx-auto py-12 px-6">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Tools Grid Section */}
+      <section id="tools" className="max-w-[1280px] mx-auto py-12 px-4 sm:px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {tools.map((t) => (
-            <Link key={t.id} href={t.href} className={`group relative bg-[#FAF8F5] p-6 rounded-2xl shadow-sm border border-slate-200 transition-all duration-300 cursor-pointer block overflow-hidden hover:-translate-y-1 hover:shadow-xl ${t.borderHoverClass}`}>
+            <Link
+              key={t.id}
+              href={t.href}
+              className={`group relative bg-[#FAF8F5] p-5 sm:p-6 rounded-2xl shadow-sm border border-slate-200 transition-all duration-200 cursor-pointer block overflow-hidden active:scale-95 md:hover:-translate-y-1 md:hover:shadow-xl ${t.borderHoverClass}`}
+            >
               {t.badge && (
-                <div className="absolute top-0 right-0 bg-[#6366F1] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl shadow-sm">
+                <div className="absolute top-0 right-0 bg-emerald-600 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-bl-xl shadow-sm">
                   {t.badge}
                 </div>
               )}
@@ -175,13 +282,11 @@ export default function Home() {
           ))}
         </div>
       </section>
-      
-      {/* Simple Footer */}
+
+      {/* Footer */}
       <footer className="border-t border-[#E5E7EB] py-8 mt-12">
         <p className="text-center text-sm text-[#9CA3AF]">© 2026 Omni. The universal workspace.</p>
       </footer>
     </main>
   );
 }
-
-

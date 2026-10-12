@@ -152,7 +152,7 @@ function FileRow({
           {stage !== "done" && stage !== "error" && (
             stage === "queued"
               ? <div className="w-3.5 h-3.5 rounded-full border border-slate-300 shrink-0" />
-              : <Loader2 className="w-3.5 h-3.5 text-sky-500 shrink-0 animate-spin" />
+              : <Loader2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 animate-spin" />
           )}
           <span className="text-xs font-medium text-slate-700 truncate">{name}</span>
           {size != null && (
@@ -259,11 +259,11 @@ export function UploadCard({ onReady }: { onReady: (docs: DocInfo[]) => void }) 
               onDragLeave={() => setDragOver(false)}
               onClick={() => fileRef.current?.click()}
               className={`relative cursor-pointer rounded-3xl border-2 border-dashed px-8 py-16 text-center transition-all duration-300 shadow-sm hover:shadow-md ${
-                dragOver ? "border-indigo-500 bg-indigo-50/80 scale-[1.02]" : "border-slate-300 bg-white hover:border-indigo-400 hover:bg-slate-50"
+                dragOver ? "border-emerald-500 bg-emerald-50/80 scale-[1.02]" : "border-slate-300 bg-white hover:border-emerald-400 hover:bg-slate-50"
               }`}
             >
               <div className={`mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl transition-colors duration-300 ${
-                dragOver ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200" : "bg-indigo-100 text-indigo-600 group-hover:bg-indigo-200"
+                dragOver ? "bg-emerald-600 text-white shadow-lg shadow-emerald-200" : "bg-emerald-100 text-emerald-600 group-hover:bg-emerald-200"
               }`}>
                 <FileUp className="w-8 h-8" />
               </div>
@@ -291,14 +291,14 @@ export function UploadCard({ onReady }: { onReady: (docs: DocInfo[]) => void }) 
               {files.map((f, i) => (
                 <div key={`${f.name}-${i}`}
                   className="flex items-center gap-2 min-w-0 px-4 py-2.5">
-                  <FileText className="w-4 h-4 text-sky-400 shrink-0" />
+                  <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span className="text-sm text-slate-700 truncate">{f.name}</span>
                   <span className="text-xs text-slate-400 shrink-0">{formatBytes(f.size)}</span>
                 </div>
               ))}
             </div>
             <div className="flex items-center justify-center gap-2 border-t border-slate-100 px-4 py-3">
-              <Loader2 className="w-3.5 h-3.5 text-sky-400 animate-spin" />
+              <Loader2 className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
               <span className="text-xs text-slate-500 animate-pulse">Starting upload…</span>
             </div>
           </motion.div>
@@ -311,7 +311,7 @@ export function UploadCard({ onReady }: { onReady: (docs: DocInfo[]) => void }) 
             exit={{ opacity: 0 }} transition={{ duration: 0.25 }}
             className="rounded-2xl border border-slate-200 bg-white/90 shadow-lg px-6 py-8 text-center"
             style={{ backdropFilter: "blur(12px)" }}>
-            <Loader2 className="w-8 h-8 text-sky-400 animate-spin mx-auto mb-3" />
+            <Loader2 className="w-8 h-8 text-emerald-400 animate-spin mx-auto mb-3" />
             <p className="text-sm font-medium text-slate-600">
               Uploading {files.length === 1 ? files[0]?.name : `${files.length} PDFs`}…
             </p>
@@ -329,7 +329,7 @@ export function UploadCard({ onReady }: { onReady: (docs: DocInfo[]) => void }) 
             <div className="px-4 pt-4 pb-3 border-b border-slate-100">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 text-sky-500 animate-spin" />
+                  <Loader2 className="w-4 h-4 text-emerald-500 animate-spin" />
                   Processing {batch.docs.length} {batch.docs.length === 1 ? "document" : "documents"}
                 </span>
                 <span className="text-sm font-bold tabular-nums"
@@ -376,7 +376,7 @@ export function UploadCard({ onReady }: { onReady: (docs: DocInfo[]) => void }) 
             {/* Tap to skip the 1 s delay */}
             <button
               onClick={() => onReady(doneRef.current)}
-              className="mt-2 text-xs text-sky-500 hover:underline">
+              className="mt-2 text-xs text-emerald-500 hover:underline">
               Open now
             </button>
           </motion.div>
@@ -393,19 +393,19 @@ function OmniHeader() {
   return (
     <header className="fixed top-0 inset-x-0 h-16 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 flex items-center justify-between px-6 sm:px-12">
       <div className="flex items-center gap-2 cursor-pointer">
-        <div className="h-7 w-7 rounded-lg flex items-center justify-center bg-gradient-to-br from-sky-400 to-sky-600 shadow-sm">
+        <div className="h-7 w-7 rounded-lg flex items-center justify-center bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm">
           <Zap className="w-4 h-4 text-white" />
         </div>
         <span className="text-xl font-black tracking-tight text-slate-800">Omni</span>
       </div>
       <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
-        <a href="#" className="hover:text-sky-500 transition-colors">Tools</a>
-        <a href="#" className="hover:text-sky-500 transition-colors">Pricing</a>
-        <a href="#" className="hover:text-sky-500 transition-colors">API</a>
-        <a href="#" className="hover:text-sky-500 transition-colors">About</a>
+        <a href="#" className="hover:text-emerald-500 transition-colors">Tools</a>
+        <a href="#" className="hover:text-emerald-500 transition-colors">Pricing</a>
+        <a href="#" className="hover:text-emerald-500 transition-colors">API</a>
+        <a href="#" className="hover:text-emerald-500 transition-colors">About</a>
       </nav>
       <div className="flex items-center gap-4">
-        <button className="hidden sm:block text-sm font-semibold text-slate-600 hover:text-sky-500 transition-colors">Log in</button>
+        <button className="hidden sm:block text-sm font-semibold text-slate-600 hover:text-emerald-500 transition-colors">Log in</button>
         <button className="text-sm font-bold text-white bg-slate-800 px-5 py-2 rounded-full hover:bg-slate-700 transition-colors shadow-sm">
           Sign up
         </button>
@@ -432,9 +432,9 @@ function MicroToolsGrid() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tools.map((t) => (
-            <div key={t.title} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-sky-200 transition-all cursor-pointer group">
-              <div className="h-12 w-12 rounded-xl bg-sky-50 flex items-center justify-center mb-5 group-hover:bg-sky-500 transition-colors">
-                <t.icon className="w-5 h-5 text-sky-500 group-hover:text-white transition-colors" />
+            <div key={t.title} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-emerald-200 transition-all cursor-pointer group">
+              <div className="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-5 group-hover:bg-emerald-500 transition-colors">
+                <t.icon className="w-5 h-5 text-emerald-500 group-hover:text-white transition-colors" />
               </div>
               <h3 className="text-lg font-bold text-slate-800 mb-2">{t.title}</h3>
               <p className="text-sm text-slate-500 leading-relaxed">{t.desc}</p>
@@ -479,7 +479,7 @@ export function HeroUpload({ onReady }: { onReady: (docs: DocInfo[]) => void }) 
 
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
           className="mb-8 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 shadow-sm">
-          <span className="flex h-2 w-2 rounded-full bg-sky-500 animate-pulse" />
+          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Version 2.0 is Live</span>
         </motion.div>
 
